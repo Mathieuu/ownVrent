@@ -1,5 +1,5 @@
-import Head from "next/head"
-import { Button as ButtonCustom } from "components/Button/Button"
+import Head from "next/head";
+import { MortgageSection } from "components/MortgageSection/MortgageSection";
 
 export default function Web() {
   return (
@@ -14,11 +14,10 @@ export default function Web() {
         <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
         <title>Next.js Enterprise Boilerplate</title>
-        <div>
-          <button>Hello html</button>
-          <ButtonCustom>Hello custom</ButtonCustom>
-        </div>
       </Head>
+
+
+      <MortgageSection />
     </>
-  )
+  );
 }
