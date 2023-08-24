@@ -16,7 +16,6 @@ export default function Web() {
         <title>Next.js Enterprise Boilerplate</title>
       </Head>
 
-
       <MortgageSection />
     </>
   );

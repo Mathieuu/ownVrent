@@ -13,14 +13,14 @@ function MyApp({ Component, pageProps }: AppProps) {
       }}
     >
       <Layout style={{ minHeight: "100vh" }}>
-        <Header className="!bg-transparent">Header</Header>
+        <Header className="!bg-transparent" />
         <div className="mx-auto flex w-full max-w-screen-lg grow">
-          <div className="p-4">Menu</div>
+          <div className="p-4" />
           <div className="grow">
             <Component {...pageProps} />
           </div>
         </div>
-        <Footer className="!bg-transparent">Footer</Footer>
+        <Footer className="!bg-transparent" />
       </Layout>
     </ConfigProvider>
   );

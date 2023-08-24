@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "cross-env FORCE_COLOR=1 next dev -p 4000",
+    "dev-e2e": "cross-env FORCE_COLOR=1 next dev -p 4050",
     "build": "next build",
     "start": "next start -p 4000",
     "lint": "next lint",

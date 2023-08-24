@@ -1,6 +1,6 @@
 import { divide, multiply, pow, substract, sum } from "./maths";
 
-type InputType = {
+export type MortgageInputType = {
   housePrice: NumberNil;
   closingCosts: NumberNil;
   downpayment: NumberNil;
@@ -9,7 +9,7 @@ type InputType = {
   interestRatePerYear: NumberNil;
 };
 
-export type MortgageType = InputType & {
+export type MortgageType = MortgageInputType & {
   amortizationInMonths: NumberNil;
   downpaymentPercent: NumberNil;
   interestRatePerMonth: NumberNil;
@@ -30,7 +30,7 @@ const PMT = (P: NumberNil, r: NumberNil, n: NumberNil) => {
   return divide(numerator, denominator);
 };
 
-export const buildMortgage = (input: InputType): MortgageType => {
+export const buildMortgage = (input: MortgageInputType): MortgageType => {
   const totalHostCost = sum(input.housePrice, input.closingCosts);
   const downpaymentPercent = multiply(divide(input.downpayment, totalHostCost), 100);
   const leftToPay = substract(totalHostCost, input.downpayment);
