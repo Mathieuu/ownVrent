@@ -1,4 +1,4 @@
-import { isNil } from "lodash";
+import { isNil } from "lodash-es";
 
 export const sum = (a: NumberNil, b: NumberNil): NumberNil => {
   if (isNil(a) || isNil(b)) {
