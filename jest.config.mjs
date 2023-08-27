@@ -10,6 +10,10 @@ const config = {
   testEnvironment: "jest-environment-jsdom",
   modulePathIgnorePatterns: ["<rootDir>/dist/"],
   testPathIgnorePatterns: ["<rootDir>/e2e"],
+  moduleNameMapper: {
+    // https://stackoverflow.com/questions/42260218/jest-setup-syntaxerror-unexpected-token-export
+    "^lodash-es/(.*)$": "<rootDir>/node_modules/lodash/$1",
+  },
 };
 
 export default createJestConfig(config);
