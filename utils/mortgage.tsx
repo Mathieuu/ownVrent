@@ -1,5 +1,10 @@
 import { divide, multiply, pow, substract, sum } from "./maths";
 
+type PaymentBreakdownPerMonthType = Array<{
+  principal: NumberNil;
+  interests: NumberNil;
+}>;
+
 export type MortgageInputType = {
   housePrice: NumberNil;
   closingCosts: NumberNil;
@@ -14,9 +19,10 @@ export type MortgageType = MortgageInputType & {
   downpaymentPercent: NumberNil;
   interestRatePerMonth: NumberNil;
   leftToPay: NumberNil;
-  paymentsPerMonth: NumberNil;
-  totalHostCost: NumberNil;
+  paymentEachMonth: NumberNil;
+  totalHouseCost: NumberNil;
   totalRepaid: NumberNil;
+  paymentsBreakdownPerMonth: PaymentBreakdownPerMonthType;
 };
 
 // =P*r*(1+r)^n/((1+r)^n-1)
@@ -30,10 +36,37 @@ const PMT = (P: NumberNil, r: NumberNil, n: NumberNil) => {
   return divide(numerator, denominator);
 };
 
+const buildPaymentsBreakdownPerMonth = ({
+  amortizationInMonths,
+  leftToPay,
+  interestRatePerMonth,
+  paymentEachMonth,
+}: {
+  amortizationInMonths: NumberNil;
+  leftToPay: NumberNil;
+  interestRatePerMonth: NumberNil;
+  paymentEachMonth: NumberNil;
+}): PaymentBreakdownPerMonthType => {
+  let principal = leftToPay;
+  const paymentsBreakdownPerMonth = [];
+
+  for (let i = 0; i < (amortizationInMonths ?? 0); i++) {
+    const interests = multiply(principal, divide(interestRatePerMonth, 100));
+    principal = substract(principal, substract(paymentEachMonth, interests));
+
+    paymentsBreakdownPerMonth.push({
+      principal,
+      interests,
+    });
+  }
+
+  return paymentsBreakdownPerMonth;
+};
+
 export const buildMortgage = (input: MortgageInputType): MortgageType => {
-  const totalHostCost = sum(input.housePrice, input.closingCosts);
-  const downpaymentPercent = multiply(divide(input.downpayment, totalHostCost), 100);
-  const leftToPay = substract(totalHostCost, input.downpayment);
+  const totalHouseCost = sum(input.housePrice, input.closingCosts);
+  const downpaymentPercent = multiply(divide(input.downpayment, totalHouseCost), 100);
+  const leftToPay = substract(totalHouseCost, input.downpayment);
   const amortizationInMonths = multiply(input.amortizationInYears, 12);
 
   // =(1+interestRatePerYear/compoundedPerYears)^(compoundedPerYears/12)-1
@@ -43,8 +76,15 @@ export const buildMortgage = (input: MortgageInputType): MortgageType => {
     return multiply(res, 100); // Percentage
   })();
 
-  const paymentsPerMonth = PMT(leftToPay, divide(interestRatePerMonth, 100), amortizationInMonths);
-  const totalRepaid = multiply(paymentsPerMonth, amortizationInMonths);
+  const paymentEachMonth = PMT(leftToPay, divide(interestRatePerMonth, 100), amortizationInMonths);
+  const totalRepaid = multiply(paymentEachMonth, amortizationInMonths);
+
+  const paymentsBreakdownPerMonth = buildPaymentsBreakdownPerMonth({
+    amortizationInMonths,
+    leftToPay,
+    interestRatePerMonth,
+    paymentEachMonth,
+  });
 
   return {
     ...input,
@@ -52,8 +92,9 @@ export const buildMortgage = (input: MortgageInputType): MortgageType => {
     downpaymentPercent,
     interestRatePerMonth,
     leftToPay,
-    paymentsPerMonth,
-    totalHostCost,
+    paymentEachMonth,
+    totalHouseCost,
     totalRepaid,
+    paymentsBreakdownPerMonth,
   };
 };

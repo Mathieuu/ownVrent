@@ -5,7 +5,7 @@ export function formatMoney(
     notation?: Intl.NumberFormatOptions["notation"];
   }
 ): string {
-  if (value === null || value === undefined) {
+  if (value === null || value === undefined || isNaN(value)) {
     return "-";
   }
 
