@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { ConclusionSection } from "components/ConclusionSection/ConclusionSection";
 import { HouseSection } from "components/HouseSection/HouseSection";
 import { InvestmentSection } from "components/InvestmentSection/InvestmentSection";
 import { MortgageSection } from "components/MortgageSection/MortgageSection";
 import { RentSection } from "components/RentSection/RentSection";
+import { buildConclusion } from "utils/conclusion";
 import { defaultHouseInput, defaultInvestmentInput, defaultMortgageInput, defaultRentInput } from "utils/defaultValues";
 import { buildHouse, HouseInputType } from "utils/house";
 import { buildInvestment, InvestmentInputType } from "utils/investment";
@@ -41,7 +43,7 @@ export function Calculator() {
   };
 
   const investment = buildInvestment(investmentInput, mortgage, rent);
-
+  const conclusion = buildConclusion(mortgage, house, investment);
   return (
     <div>
       <MortgageSection onValuesChange={onMortgageValuesChange} mortgage={mortgage} mortgageInput={mortgageInput} />
@@ -60,6 +62,7 @@ export function Calculator() {
         investment={investment}
         investmentInput={investmentInput}
       />
+      <ConclusionSection className="mt-8" conclusion={conclusion} />
     </div>
   );
 }

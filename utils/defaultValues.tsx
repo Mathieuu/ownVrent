@@ -1,3 +1,4 @@
+import { buildConclusion } from "./conclusion";
 import { buildHouse } from "./house";
 import { buildInvestment } from "./investment";
 import { buildMortgage } from "./mortgage";
@@ -37,3 +38,5 @@ export const defaultInvestmentInput = {
 };
 
 export const investment = buildInvestment(defaultInvestmentInput, mortgage, rent);
+
+export const conclusion = buildConclusion(mortgage, house, investment);
