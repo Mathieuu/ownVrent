@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { HouseSection } from "components/HouseSection/HouseSection";
+import { InvestmentSection } from "components/InvestmentSection/InvestmentSection";
 import { MortgageSection } from "components/MortgageSection/MortgageSection";
 import { RentSection } from "components/RentSection/RentSection";
-import { defaultHouseInput, defaultMortgageInput, defaultRentInput } from "utils/defaultValues";
+import { defaultHouseInput, defaultInvestmentInput, defaultMortgageInput, defaultRentInput } from "utils/defaultValues";
 import { buildHouse, HouseInputType } from "utils/house";
+import { buildInvestment, InvestmentInputType } from "utils/investment";
 import { buildMortgage, MortgageInputType } from "utils/mortgage";
 import { buildRent, RentInputType } from "utils/rent";
 
@@ -32,6 +34,14 @@ export function Calculator() {
 
   const rent = buildRent(rentInput, mortgage, house);
 
+  const [investmentInput, setInvestmentInput] = useState<InvestmentInputType>(defaultInvestmentInput);
+
+  const onInvestmentValuesChange = (changes: InvestmentInputType) => {
+    setInvestmentInput({ ...investmentInput, ...changes });
+  };
+
+  const investment = buildInvestment(investmentInput, mortgage, rent);
+
   return (
     <div>
       <MortgageSection onValuesChange={onMortgageValuesChange} mortgage={mortgage} mortgageInput={mortgageInput} />
@@ -42,6 +52,13 @@ export function Calculator() {
         mortgage={mortgage}
         rent={rent}
         rentInput={rentInput}
+      />
+      <InvestmentSection
+        className="mt-8"
+        onValuesChange={onInvestmentValuesChange}
+        mortgage={mortgage}
+        investment={investment}
+        investmentInput={investmentInput}
       />
     </div>
   );

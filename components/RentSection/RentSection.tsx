@@ -48,8 +48,8 @@ export function RentSection({ onValuesChange, rentInput, mortgage, rent, classNa
         </Form>
         <div>
           {/* TODO: This gives us 31 years womp womp */}
-          You will have spent <b>{formatMoney(rent.spentOnRentHistory?.at(-1))}</b> on rent in{" "}
-          {mortgage.amortizationInYears ?? 0} years.
+          You will have spent <b>{formatMoney(rent.spentOnRentHistory?.at(-1))}</b> on rent after{" "}
+          {mortgage.amortizationInYears ?? 0} full years.
         </div>
       </Card>
     </div>

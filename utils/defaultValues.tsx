@@ -1,4 +1,5 @@
 import { buildHouse } from "./house";
+import { buildInvestment } from "./investment";
 import { buildMortgage } from "./mortgage";
 import { buildRent } from "./rent";
 
@@ -30,3 +31,9 @@ export const defaultRentInput = {
 };
 
 export const rent = buildRent(defaultRentInput, mortgage, house);
+export const defaultInvestmentInput = {
+  investmentReturn: 6,
+  investmentTaxRate: 20,
+};
+
+export const investment = buildInvestment(defaultInvestmentInput, mortgage, rent);
